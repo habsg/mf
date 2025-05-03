@@ -11,9 +11,7 @@ import secrets
 import json
 
 # --- Flask App Setup ---
-# Corrected: Removed extra comment and used standard quotes
-app = Flask(__name__, template_folder="src/templates", static_folder="src/static")
-app.secret_key = secrets.token_hex(16) # For session management
+# Corrected: Removed extra comment and used standard quotapp = Flask(__name__, template_folder=\"templates\", static_folder=\"static\")app.secret_key = secrets.token_hex(16) # For session management
 
 # Define upload folder (relative to main.py location)
 # Corrected: Used standard quotes
