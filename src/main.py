@@ -9,6 +9,7 @@ from sklearn.preprocessing import MinMaxScaler
 from flask import Flask, request, render_template, jsonify, session
 import secrets
 import json
+import logging # Import logging
 
 # --- Flask App Setup ---
 # Flask app setup - templates/static are now in the parent directory
@@ -16,6 +17,9 @@ app = Flask(__name__,
             template_folder=\"../templates\",
             static_folder=\"../static\")
 app.secret_key = secrets.token_hex(16) # For session management
+
+# Set logging level to DEBUG
+app.logger.setLevel(logging.DEBUG)
 
 # Define upload folder (relative to main.py location)
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), \"uploads\")
