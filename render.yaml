@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: mutual-fund-analyzer # You can change this name in Render UI
+    env: python
+    plan: free # Or your desired plan
+    region: oregon # Or your preferred region
+    buildCommand: "pip install --upgrade pip && pip install -r requirements.txt"
+    startCommand: "gunicorn src.main:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11 # Specify the Python version used
+      - key: FLASK_ENV # Optional: Set Flask environment if needed, e.g., production
+        value: production
+

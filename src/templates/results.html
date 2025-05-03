@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutual Fund Analysis Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include a library for sliders if needed, e.g., noUiSlider or use native range inputs -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f4f8; padding: 20px; }
+        .container { max-width: 1600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow: hidden; }
+        .header { background-color: #1e3a8a; color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 1.5rem; margin: 0; }
+        .logo { max-height: 40px; }
+        .content { display: flex; }
+        .sidebar { width: 350px; padding: 20px; border-right: 1px solid #e5e7eb; background-color: #f9fafb; }
+        .main-content { flex-grow: 1; padding: 20px; overflow-x: auto; }
+        h2 { font-size: 1.25rem; color: #1e3a8a; margin-bottom: 15px; border-bottom: 1px solid #e5e7eb; padding-bottom: 5px; }
+        .summary-item { margin-bottom: 5px; font-size: 0.9rem; }
+        .param-weight label, .aum-filter label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        .param-weight input[type=\"number\"] { width: 60px; padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 4px; margin-left: 10px; text-align: right; }
+        .param-weight .slider-container { margin-bottom: 15px; }
+        .param-weight .slider { height: 8px; background: #d1d5db; border-radius: 4px; margin-top: 5px; }
+        .aum-filter .slider { height: 8px; background: #d1d5db; border-radius: 4px; margin-top: 5px; margin-bottom: 10px; }
+        .aum-values { font-size: 0.9rem; color: #4b5563; text-align: center; margin-top: 5px; }
+        #update-button { width: 100%; padding: 10px; background-color: #1e3a8a; color: white; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: background-color 0.3s ease; margin-top: 20px; }
+        #update-button:hover { background-color: #1e40af; }
+        #update-button:disabled { background-color: #9ca3af; cursor: not-allowed; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.85rem; }
+        th, td { border: 1px solid #e5e7eb; padding: 8px 10px; text-align: left; white-space: nowrap; }
+        th { background-color: #f3f4f6; font-weight: 600; }
+        tbody tr:nth-child(even) { background-color: #f9fafb; }
+        .spinner { border: 4px solid rgba(0, 0, 0, 0.1); width: 24px; height: 24px; border-radius: 50%; border-left-color: #1e3a8a; animation: spin 1s ease infinite; margin: 10px auto; display: none; /* Hidden by default */ }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .noUi-connect { background: #1e3a8a; }
+        .noUi-handle { border-radius: 50%; background: #fff; border: 1px solid #1e3a8a; box-shadow: none; width: 16px !important; height: 16px !important; right: -8px !important; top: -4px !important; cursor: pointer; }
+        .noUi-handle:focus { outline: none; }
+        .noUi-target { border: none; }
+        .total-count { margin-top: 10px; font-style: italic; color: #6b7280; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mutual Fund Analysis Results</h1>
+            <img src="https://manus.im/img/logo-light.svg" alt="Manus Logo" class="logo">
+        </div>
+        <div class="content">
+            <div class="sidebar">
+                <h2>Fund Summary</h2>
+                <div id="fund-summary">
+                    {% for category, count in summary.items() %}
+                        <p class="summary-item">{{ category }}: {{ count }}</p>
+                    {% endfor %}
+                    <p class="summary-item font-semibold mt-2">Total Funds: {{ total_funds }}</p>
+                </div>
+
+                <h2 class="mt-6">Parameter Weights</h2>
+                <div id="parameter-weights">
+                    {% for param in parameters %}
+                    <div class="param-weight">
+                        <label for="weight-{{ loop.index0 }}">{{ param }}:
+                            <input type="number" id="weight-{{ loop.index0 }}" data-param="{{ param }}" value="{{ weights.get(param, 1) }}" min="0" step="0.1" class="weight-input float-right">
+                        </label>
+                        <div id="slider-{{ loop.index0 }}" class="slider weight-slider" data-param="{{ param }}"></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h2 class="mt-6">AUM Filter (in Rs. cr)</h2>
+                <div class="aum-filter">
+                    <label>Assets Under Management Range:</label>
+                    <div id="aum-slider" class="slider"></div>
+                    <div id="aum-values" class="aum-values">{{ current_min_aum }} - {{ current_max_aum }}</div>
+                </div>
+
+                <button id="update-button">Update Ranking & Filter</button>
+                <div id="update-spinner" class="spinner"></div>
+            </div>
+            <div class="main-content">
+                <h2>Ranked Funds</h2>
+                <div id="total-count" class="total-count">Showing top {{ ranked_data|length }} funds.</div>
+                <div class="overflow-x-auto">
+                    <table id="results-table">
+                        <thead>
+                            <tr>
+                                {% for col in columns %}
+                                    <th>{{ col }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in ranked_data %}
+                            <tr>
+                                {% for col in columns %}
+                                    <td>{{ row[col] }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const weightSliders = {};
+        const weightInputs = {};
+        const parameters = {{ parameters | tojson }};
+        const initialWeights = {{ weights | tojson }};
+        const updateButton = document.getElementById(\"update-button\");
+        const updateSpinner = document.getElementById(\"update-spinner\");
+        const resultsTableBody = document.querySelector(\"#results-table tbody\");
+        const resultsTableHead = document.querySelector(\"#results-table thead tr\");
+        const totalCountDiv = document.getElementById(\"total-count\");
+
+        // Initialize Weight Sliders and Inputs
+        parameters.forEach((param, index) => {
+            const sliderEl = document.getElementById(`slider-${index}`);
+            const inputEl = document.getElementById(`weight-${index}`);
+            const initialValue = parseFloat(initialWeights[param] || 1);
+
+            noUiSlider.create(sliderEl, {
+                start: initialValue,
+                connect: \"lower\",
+                range: {
+                    \"min\": 0,
+                    \"max\": 10 // Adjust max weight if needed
+                },
+                step: 0.1,
+                format: {
+                    to: value => value.toFixed(1),
+                    from: value => parseFloat(value)
+                }
+            });
+
+            weightSliders[param] = sliderEl.noUiSlider;
+            weightInputs[param] = inputEl;
+
+            // Sync slider and input
+            sliderEl.noUiSlider.on(\"update\", (values, handle) => {
+                inputEl.value = values[handle];
+            });
+            inputEl.addEventListener(\"change\", () => {
+                sliderEl.noUiSlider.set(inputEl.value);
+            });
+        });
+
+        // Initialize AUM Slider
+        const aumSliderEl = document.getElementById(\"aum-slider\");
+        const aumValuesEl = document.getElementById(\"aum-values\");
+        const minAum = {{ min_aum }};
+        const maxAum = {{ max_aum }};
+        const currentMinAum = {{ current_min_aum }};
+        const currentMaxAum = {{ current_max_aum }};
+
+        noUiSlider.create(aumSliderEl, {
+            start: [currentMinAum, currentMaxAum],
+            connect: true,
+            range: {
+                \"min\": minAum,
+                \"max\": maxAum
+            },
+            step: 1, // Adjust step if needed, e.g., 100 for large ranges
+            margin: 1, // Minimum distance between handles
+            format: {
+                to: value => Math.round(value),
+                from: value => Math.round(value)
+            }
+        });
+
+        aumSliderEl.noUiSlider.on(\"update\", (values, handle) => {
+            aumValuesEl.textContent = `${values[0]} - ${values[1]}`;
+        });
+
+        // Update Ranking Function
+        async function updateRanking() {
+            updateButton.disabled = true;
+            updateSpinner.style.display = \"block\";
+
+            const currentWeights = {};
+            parameters.forEach(param => {
+                currentWeights[param] = parseFloat(weightInputs[param].value) || 0;
+            });
+
+            const aumRange = aumSliderEl.noUiSlider.get();
+
+            try {
+                const response = await fetch(\"/update_ranking\", {
+                    method: \"POST\",
+                    headers: {
+                        \"Content-Type\": \"application/json\",
+                    },
+                    body: JSON.stringify({
+                        weights: currentWeights,
+                        min_aum: aumRange[0],
+                        max_aum: aumRange[1]
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Update table header
+                resultsTableHead.innerHTML = data.columns.map(col => `<th>${col}</th>`).join(\"\");
+
+                // Update table body
+                resultsTableBody.innerHTML = data.ranked_data.map(row => {
+                    const cells = data.columns.map(col => `<td>${row[col] !== null && row[col] !== undefined ? row[col] : \"\"}</td>`).join(\"\");
+                    return `<tr>${cells}</tr>`;
+                }).join(\"\");
+                
+                // Update total count message
+                totalCountDiv.textContent = `Showing ${data.ranked_data.length} of ${data.total_filtered_count} funds matching criteria.`;
+
+            } catch (error) {
+                console.error(\"Error updating ranking:\", error);
+                alert(\"Failed to update ranking. Please check console for details.\");
+            } finally {
+                updateButton.disabled = false;
+                updateSpinner.style.display = \"none\";
+            }
+        }
+
+        updateButton.addEventListener(\"click\", updateRanking);
+
+    </script>
+</body>
+</html>
+
