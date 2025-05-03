@@ -14,7 +14,7 @@ import json
 app.secret_key = secrets.token_hex(16) # For session management
 
 # Define upload folder (relative to main.py location)
-UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), \'uploads\')
+UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 app.config[\'UPLOAD_FOLDER\'] = UPLOAD_FOLDER
 
 # Ensure upload folder exists
