@@ -10,8 +10,7 @@ from flask import Flask, request, render_template, jsonify, session
 import secrets
 import json
 
-# --- Flask App Setup ---
-app = Flask(__name__, template_folder=\'src/templates\', static_folder=\'src/static\')
+# --- Flask App Setup app = Flask(__name__, template_folder=\"src/templates\", static_folder=\"src/static\")
 app.secret_key = secrets.token_hex(16) # For session management
 
 # Define upload folder (relative to main.py location)
