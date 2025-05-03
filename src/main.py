@@ -10,13 +10,10 @@ from flask import Flask, request, render_template, jsonify, session
 import secrets
 import json
 
-# --- Flask App Setup --# Get the absolute path of the directory where main.py is located
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-app = Flask(__name__, 
-            root_path=basedir, # Explicitly set root path
-            template_folder=\"templates\", # Relative to root_path
-            static_folder=\"static\") # Relative to root_pathp.secret_key = secrets.token_hex(16) # For session management
+# --- Flask App Setup --# Flask app setup - templates/static are now in the parent directory
+app = Flask(__name__,
+            template_folder='../templates',
+            static_folder='../static')pathp.secret_key = secrets.token_hex(16) # For session management
 
 # Define upload folder (relative to main.py location)
 # Corrected: Used standard quotes
