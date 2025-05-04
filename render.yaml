@@ -1,14 +1,18 @@
 services:
   - type: web
     name: mutual-fund-analyzer # You can change this name in Render UI
-    env: python
+    env: docker # Specify Docker environment
     plan: free # Or your desired plan
     region: oregon # Or your preferred region
-    buildCommand: "pip install --upgrade pip && pip install -r requirements.txt"
-    startCommand: "gunicorn src.main:app"
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.11 # Specify the Python version used
-      - key: FLASK_ENV # Optional: Set Flask environment if needed, e.g., production
-        value: production
+    # buildCommand is not needed for Docker, Render uses Dockerfile
+    # startCommand is defined in the Dockerfile CMD
+    # Remove Python specific envVars
+    # envVars:
+    #   - key: PYTHON_VERSION
+    #     value: 3.11
+    #   - key: FLASK_ENV
+    #     value: production
+    # Docker specific settings (optional, but good practice)
+    dockerfilePath: ./Dockerfile # Path to your Dockerfile
+    # You might need to set other envVars here if your app needs them (e.g., database URLs)
 

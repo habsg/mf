@@ -1,0 +1,58 @@
+Initial Summary of Fund Types:
+
+The uploaded file contains mutual funds across the following categories:
+
+Category Code   Count     
+--------------------------
+DT-B&PSU        26        
+DT-CORP         21        
+DT-CR           15        
+DT-DYN          22        
+DT-ETF          33        
+DT-FL           12        
+DT-GILT         38        
+DT-GL10Y        6         
+DT-LD           26        
+DT-LIQ          38        
+DT-LOWD         23        
+DT-M&LD         61        
+DT-MD           29        
+DT-MM           23        
+DT-ON           34        
+DT-SD           34        
+DT-USD          29        
+EQ-AUTO         10        
+EQ-CONS         22        
+EQ-DIV          10        
+EQ-ELSS         42        
+EQ-ETF          185       
+EQ-FIN          22        
+EQ-FLEX         48        
+EQ-INDX         197       
+EQ-INFRA        21        
+EQ-INTL         8         
+EQ-L&M          31        
+EQ-LC           39        
+EQ-MID          31        
+EQ-MLC          43        
+EQ-MNC          6         
+EQ-PHRM         18        
+EQ-POWER        7         
+EQ-SML          30        
+EQ-TECH         12        
+EQ-THEM         98        
+EQ-VAL          23        
+FOF-DOM         68        
+FOF-OVR         57        
+GOLD-ETF        35        
+GOLD-MF         18        
+HY-ARB          31        
+HY-DT(BA)       1         
+HY-DT(CO)       18        
+HY-DYN          34        
+HY-EQ           56        
+HY-MULTI        29        
+HY-SOL          43        
+
+--------------------------
+Total Funds     1763      

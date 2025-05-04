@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutual Fund Analysis App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 150px; /* Adjust as needed */
+        }
+        h1 {
+            text-align: center;
+            color: #1e3a8a; /* Dark blue */
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #374151; /* Gray-700 */
+        }
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db; /* Gray-300 */
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #1e3a8a; /* Dark blue */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #1e40af; /* Slightly lighter blue */
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #1e3a8a;
+            animation: spin 1s ease infinite;
+            margin: 20px auto;
+            display: none; /* Hidden by default */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- You can replace this with your actual logo URL -->
+        <img src="https://manus.im/img/logo-dark.svg" alt="Manus Logo" class="logo">
+        <h1>Mutual Fund Analysis App</h1>
+        <form id="upload-form" action="/" method="post" enctype="multipart/form-data">
+            <label for="file">Upload Mutual Fund Data (CSV):</label>
+            <input type="file" id="file" name="file" accept=".csv" required>
+            <button type="submit" id="submit-button">Analyze Funds</button>
+        </form>
+        <div id="loading-spinner" class="spinner"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById("upload-form");
+        const submitButton = document.getElementById("submit-button");
+        const spinner = document.getElementById("loading-spinner");
+
+        form.addEventListener("submit", () => {
+            // Disable button and show spinner on form submission
+            submitButton.disabled = true;
+            submitButton.textContent = "Analyzing...";
+            spinner.style.display = "block";
+        });
+    </script>
+</body>
+</html>
+

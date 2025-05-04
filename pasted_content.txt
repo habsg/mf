@@ -1,0 +1,100 @@
+2025-05-03T12:22:50.240644627Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.0/45.0 kB 9.5 MB/s eta 0:00:00
+2025-05-03T12:22:50.244866601Z Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2025-05-03T12:22:50.251272082Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 46.4 MB/s eta 0:00:00
+2025-05-03T12:22:50.26306443Z Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+2025-05-03T12:22:50.273153151Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 60.2 MB/s eta 0:00:00
+2025-05-03T12:22:50.278852247Z Downloading scikit_learn-1.6.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.5 MB)
+2025-05-03T12:22:50.371408077Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.5/13.5 MB 137.4 MB/s eta 0:00:00
+2025-05-03T12:22:50.374866573Z Downloading scipy-1.15.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (37.6 MB)
+2025-05-03T12:22:50.63189109Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 37.6/37.6 MB 89.4 MB/s eta 0:00:00
+2025-05-03T12:22:50.636352349Z Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+2025-05-03T12:22:50.643157865Z Downloading sqlalchemy-2.0.40-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.2 MB)
+2025-05-03T12:22:50.668140907Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.2/3.2 MB 137.9 MB/s eta 0:00:00
+2025-05-03T12:22:50.671119334Z Downloading threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+2025-05-03T12:22:50.677633381Z Downloading typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+2025-05-03T12:22:50.683109644Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.8/45.8 kB 10.6 MB/s eta 0:00:00
+2025-05-03T12:22:50.686043077Z Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+2025-05-03T12:22:50.694268132Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 347.8/347.8 kB 56.8 MB/s eta 0:00:00
+2025-05-03T12:22:50.698366548Z Downloading werkzeug-3.1.3-py3-none-any.whl (224 kB)
+2025-05-03T12:22:50.706039928Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.5/224.5 kB 38.3 MB/s eta 0:00:00
+2025-05-03T12:22:51.048931346Z Installing collected packages: pytz, tzdata, typing_extensions, threadpoolctl, six, PyMySQL, pycparser, packaging, numpy, MarkupSafe, joblib, itsdangerous, greenlet, click, blinker, Werkzeug, SQLAlchemy, scipy, python-dateutil, Jinja2, gunicorn, cffi, scikit-learn, pandas, Flask, cryptography, Flask-SQLAlchemy
+2025-05-03T12:23:05.327122162Z Successfully installed Flask-3.1.0 Flask-SQLAlchemy-3.1.1 Jinja2-3.1.6 MarkupSafe-3.0.2 PyMySQL-1.1.1 SQLAlchemy-2.0.40 Werkzeug-3.1.3 blinker-1.9.0 cffi-1.17.1 click-8.1.8 cryptography-36.0.2 greenlet-3.2.1 gunicorn-23.0.0 itsdangerous-2.2.0 joblib-1.4.2 numpy-2.2.5 packaging-25.0 pandas-2.2.3 pycparser-2.22 python-dateutil-2.9.0.post0 pytz-2025.2 scikit-learn-1.6.1 scipy-1.15.2 six-1.17.0 threadpoolctl-3.6.0 typing_extensions-4.13.2 tzdata-2025.2
+2025-05-03T12:23:05.46394764Z 
+2025-05-03T12:23:05.463967511Z [notice] A new release of pip is available: 24.0 -> 25.1.1
+2025-05-03T12:23:05.463973401Z [notice] To update, run: pip install --upgrade pip
+2025-05-03T12:23:17.752110006Z ==> Uploading build...
+2025-05-03T12:23:26.504059857Z ==> Uploaded in 6.7s. Compression took 2.0s
+2025-05-03T12:23:26.553753686Z ==> Build successful 🎉
+2025-05-03T12:23:28.990561485Z ==> Deploying...
+2025-05-03T12:23:49.905701614Z ==> Running 'gunicorn app:app'
+2025-05-03T12:23:50.616783435Z Traceback (most recent call last):
+2025-05-03T12:23:50.616813366Z   File "/opt/render/project/src/.venv/bin/gunicorn", line 8, in <module>
+2025-05-03T12:23:50.617470339Z     sys.exit(run())
+2025-05-03T12:23:50.617477939Z              ^^^^^
+2025-05-03T12:23:50.617482819Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 66, in run
+2025-05-03T12:23:50.617491129Z     WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]", prog=prog).run()
+2025-05-03T12:23:50.617495189Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 235, in run
+2025-05-03T12:23:50.617498929Z     super().run()
+2025-05-03T12:23:50.617502759Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 71, in run
+2025-05-03T12:23:50.617506619Z     Arbiter(self).run()
+2025-05-03T12:23:50.617510449Z     ^^^^^^^^^^^^^
+2025-05-03T12:23:50.617514169Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/arbiter.py", line 57, in __init__
+2025-05-03T12:23:50.61751784Z     self.setup(app)
+2025-05-03T12:23:50.61752168Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/arbiter.py", line 117, in setup
+2025-05-03T12:23:50.6175297Z     self.app.wsgi()
+2025-05-03T12:23:50.61753372Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-05-03T12:23:50.617635062Z     self.callable = self.load()
+2025-05-03T12:23:50.617640692Z                     ^^^^^^^^^^^
+2025-05-03T12:23:50.617645212Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-05-03T12:23:50.617725053Z     return self.load_wsgiapp()
+2025-05-03T12:23:50.617799055Z            ^^^^^^^^^^^^^^^^^^^
+2025-05-03T12:23:50.617807775Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-05-03T12:23:50.617872456Z     return util.import_app(self.app_uri)
+2025-05-03T12:23:50.617910707Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-05-03T12:23:50.617926417Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/util.py", line 370, in import_app
+2025-05-03T12:23:50.61807884Z     mod = importlib.import_module(module)
+2025-05-03T12:23:50.618092891Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-05-03T12:23:50.618132091Z   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+2025-05-03T12:23:50.61912994Z     return _bootstrap._gcd_import(name[level:], package, level)
+2025-05-03T12:23:50.619142211Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-05-03T12:23:50.619146971Z   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+2025-05-03T12:23:50.619151481Z   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+2025-05-03T12:23:50.619155611Z   File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+2025-05-03T12:23:50.619159761Z ModuleNotFoundError: No module named 'app'
+2025-05-03T12:23:52.012750578Z ==> Exited with status 1
+2025-05-03T12:23:52.177015326Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2025-05-03T12:23:56.669921819Z ==> Running 'gunicorn app:app'
+2025-05-03T12:23:57.580597228Z Traceback (most recent call last):
+2025-05-03T12:23:57.581110468Z   File "/opt/render/project/src/.venv/bin/gunicorn", line 8, in <module>
+2025-05-03T12:23:57.581135659Z     sys.exit(run())
+2025-05-03T12:23:57.581146739Z              ^^^^^
+2025-05-03T12:23:57.581153019Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 66, in run
+2025-05-03T12:23:57.581159779Z     WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]", prog=prog).run()
+2025-05-03T12:23:57.581164959Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 235, in run
+2025-05-03T12:23:57.581170109Z     super().run()
+2025-05-03T12:23:57.581175549Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 71, in run
+2025-05-03T12:23:57.581180989Z     Arbiter(self).run()
+2025-05-03T12:23:57.581185679Z     ^^^^^^^^^^^^^
+2025-05-03T12:23:57.581190769Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/arbiter.py", line 57, in __init__
+2025-05-03T12:23:57.581195829Z     self.setup(app)
+2025-05-03T12:23:57.5812011Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/arbiter.py", line 117, in setup
+2025-05-03T12:23:57.58121053Z     self.app.wsgi()
+2025-05-03T12:23:57.58121677Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-05-03T12:23:57.581299171Z     self.callable = self.load()
+2025-05-03T12:23:57.581306962Z                     ^^^^^^^^^^^
+2025-05-03T12:23:57.581312782Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-05-03T12:23:57.581401024Z     return self.load_wsgiapp()
+2025-05-03T12:23:57.581411714Z            ^^^^^^^^^^^^^^^^^^^
+2025-05-03T12:23:57.581417444Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-05-03T12:23:57.581499786Z     return util.import_app(self.app_uri)
+2025-05-03T12:23:57.581533976Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-05-03T12:23:57.581539666Z   File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/util.py", line 370, in import_app
+2025-05-03T12:23:57.581675549Z     mod = importlib.import_module(module)
+2025-05-03T12:23:57.581682919Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-05-03T12:23:57.581688109Z   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+2025-05-03T12:23:57.582358352Z     return _bootstrap._gcd_import(name[level:], package, level)
+2025-05-03T12:23:57.582963313Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-05-03T12:23:57.582971953Z   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+2025-05-03T12:23:57.582976334Z   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+2025-05-03T12:23:57.582979863Z   File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+2025-05-03T12:23:57.582990184Z ModuleNotFoundError: No module named 'app'

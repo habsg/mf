@@ -1,0 +1,61 @@
+# Mutual Fund Analysis Parameter Sets
+
+## Common Parameters (Apply to most funds)
+- AUM(in Rs. cr)
+- ExpenseRatio (%)
+- Return (%)1 yr
+- Return (%)3 yrs
+- Return (%)5 yrs
+- NAV
+- Fund Manager
+- Inception Date
+- RupeeVestRating
+
+## Equity Funds (Categories starting with EQ-)
+### Includes: Common Parameters plus the following:
+- Alpha
+- Beta
+- Standard Deviation
+- Sharpe
+- Sortino
+- Turnover Ratio (%)
+- Large Cap(%)
+- Mid Cap(%)
+- Small Cap(%)
+- Highest Sector
+- Avg. Market Cap(in Rs. cr)
+- No. ofStocks
+- Return (%)10 yrs (if available)
+
+## Debt Funds (Categories starting with DT-)
+### Includes: Common Parameters plus the following:
+- Avg. Maturity(in yrs)
+- Mod. Duration(in yrs)
+- Yield To Maturity (%)
+- Standard Deviation
+- Sharpe (Lower relevance)
+
+## Hybrid Funds (Categories starting with HY-)
+### Includes: Common Parameters plus the following:
+- Alpha
+- Beta
+- Standard Deviation
+- Sharpe
+- Sortino
+- Avg. Maturity(in yrs) # From Debt portion
+- Mod. Duration(in yrs) # From Debt portion
+- Yield To Maturity (%) # From Debt portion
+- Large Cap(%) # From Equity portion
+- Mid Cap(%) # From Equity portion
+- Small Cap(%) # From Equity portion
+- Highest Sector # From Equity portion
+
+## Other Funds (Categories starting with FOF-, GOLD-)
+### Includes: Common Parameters plus the following:
+- Standard Deviation
+- Sharpe (Lower relevance for Gold)
+
+# Note:
+# The application should dynamically select the appropriate parameter set based on the 'Category' code prefix (EQ, DT, HY, FOF, GOLD).
+# User weighting will be applied to these selected parameters.
+# AUM filtering will be applied separately.
