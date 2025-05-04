@@ -9,10 +9,11 @@
         body {
             font-family: sans-serif;
             background-color: #f0f4f8;
+            padding: 20px;
         }
         .container {
-            max-width: 600px;
-            margin: 50px auto;
+            max-width: 900px;
+            margin: 20px auto;
             padding: 30px;
             background-color: #ffffff;
             border-radius: 8px;
@@ -21,31 +22,30 @@
         .logo {
             display: block;
             margin: 0 auto 20px;
-            max-width: 150px; /* Adjust as needed */
+            max-width: 150px;
         }
-        h1 {
+        h1, h2 {
             text-align: center;
             color: #1e3a8a; /* Dark blue */
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             font-weight: bold;
             color: #374151; /* Gray-700 */
         }
-        input[type="file"] {
+        input[type="file"], input[type="number"] {
             display: block;
             width: 100%;
             padding: 10px;
             border: 1px solid #d1d5db; /* Gray-300 */
             border-radius: 4px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         button {
-            display: block;
-            width: 100%;
-            padding: 12px;
+            display: inline-block; /* Allow side-by-side buttons */
+            padding: 10px 20px;
             background-color: #1e3a8a; /* Dark blue */
             color: white;
             border: none;
@@ -53,50 +53,342 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin-top: 10px;
+            margin-right: 10px; /* Spacing between buttons */
         }
-        button:hover {
+        button:disabled {
+            background-color: #9ca3af; /* Gray-400 */
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
             background-color: #1e40af; /* Slightly lighter blue */
         }
         .spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             border-left-color: #1e3a8a;
             animation: spin 1s ease infinite;
-            margin: 20px auto;
+            margin: 10px auto;
             display: none; /* Hidden by default */
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        #parameter-selection {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb; /* Gray-200 */
+        }
+        .param-group {
+            margin-bottom: 20px;
+        }
+        .param-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .param-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        .param-item input[type="number"] {
+            width: 80px;
+            margin-left: auto; /* Push weight input to the right */
+            padding: 5px;
+            font-size: 14px;
+        }
+        #results-container {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb; /* Gray-200 */
+            overflow-x: auto; /* Allow horizontal scrolling for table */
+        }
+        #error-message {
+            color: #dc2626; /* Red-600 */
+            margin-top: 15px;
+            text-align: center;
+        }
+        /* Style the results table */
+        table.table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table.table th, table.table td {
+            border: 1px solid #e5e7eb;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        table.table th {
+            background-color: #f3f4f6; /* Gray-100 */
+            font-weight: bold;
+        }
+        table.table tr:nth-child(even) {
+            background-color: #f9fafb; /* Gray-50 */
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- You can replace this with your actual logo URL -->
-        <img src="https://manus.im/img/logo-dark.svg" alt="Manus Logo" class="logo">
+        <img src="/static/image.png" alt="App Logo" class="logo"> <!-- Assuming image.png is in static folder -->
         <h1>Mutual Fund Analysis App</h1>
-        <form id="upload-form" action="/" method="post" enctype="multipart/form-data">
-            <label for="file">Upload Mutual Fund Data (CSV):</label>
-            <input type="file" id="file" name="file" accept=".csv" required>
-            <button type="submit" id="submit-button">Analyze Funds</button>
-        </form>
-        <div id="loading-spinner" class="spinner"></div>
+
+        <!-- Step 1: File Upload -->
+        <div id="upload-section">
+            <h2>Step 1: Upload Data</h2>
+            <form id="upload-form">
+                <label for="file">Upload Mutual Fund Data (CSV or Excel):</label>
+                <input type="file" id="file" name="file" accept=".csv,.xls,.xlsx" required>
+                <button type="submit" id="upload-button">Upload & Get Parameters</button>
+            </form>
+            <div id="upload-spinner" class="spinner"></div>
+            <div id="upload-error" class="error-message"></div>
+        </div>
+
+        <!-- Step 2: Parameter Selection -->
+        <div id="parameter-section" style="display: none;">
+            <h2>Step 2: Select Parameters & Weights</h2>
+            <p>Identifier Column: <strong id="identifier-column"></strong></p>
+            <form id="analyze-form">
+                <div id="parameter-list"></div>
+                <button type="submit" id="analyze-button">Analyze Funds</button>
+                <button type="button" id="reset-button">Upload New File</button>
+            </form>
+            <div id="analyze-spinner" class="spinner"></div>
+            <div id="analyze-error" class="error-message"></div>
+        </div>
+
+        <!-- Step 3: Results -->
+        <div id="results-container" style="display: none;">
+            <h2>Analysis Results</h2>
+            <div id="results-table"></div>
+             <button type="button" id="results-reset-button">Start Over</button>
+        </div>
     </div>
 
     <script>
-        const form = document.getElementById("upload-form");
-        const submitButton = document.getElementById("submit-button");
-        const spinner = document.getElementById("loading-spinner");
+        const uploadSection = document.getElementById("upload-section");
+        const parameterSection = document.getElementById("parameter-section");
+        const resultsContainer = document.getElementById("results-container");
 
-        form.addEventListener("submit", () => {
-            // Disable button and show spinner on form submission
-            submitButton.disabled = true;
-            submitButton.textContent = "Analyzing...";
-            spinner.style.display = "block";
+        const uploadForm = document.getElementById("upload-form");
+        const uploadButton = document.getElementById("upload-button");
+        const uploadSpinner = document.getElementById("upload-spinner");
+        const uploadError = document.getElementById("upload-error");
+        const fileInput = document.getElementById("file");
+
+        const analyzeForm = document.getElementById("analyze-form");
+        const analyzeButton = document.getElementById("analyze-button");
+        const analyzeSpinner = document.getElementById("analyze-spinner");
+        const analyzeError = document.getElementById("analyze-error");
+        const parameterList = document.getElementById("parameter-list");
+        const identifierColumnSpan = document.getElementById("identifier-column");
+        const resetButton = document.getElementById("reset-button");
+        const resultsResetButton = document.getElementById("results-reset-button");
+
+        const resultsTable = document.getElementById("results-table");
+
+        let availableColumns = [];
+        let parameterSets = {};
+
+        // --- Upload Logic --- //
+        uploadForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            uploadError.textContent = "";
+            uploadButton.disabled = true;
+            uploadSpinner.style.display = "block";
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            try {
+                const response = await fetch("/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || `HTTP error! status: ${response.status}`);
+                }
+
+                console.log("Upload successful:", data);
+                availableColumns = data.columns || [];
+                parameterSets = data.parameter_sets || {};
+                identifierColumnSpan.textContent = data.identifier_col || "N/A";
+                populateParameterList();
+                uploadSection.style.display = "none";
+                parameterSection.style.display = "block";
+                resultsContainer.style.display = "none"; // Hide results if shown before
+
+            } catch (error) {
+                console.error("Upload failed:", error);
+                uploadError.textContent = `Upload failed: ${error.message}`;
+            } finally {
+                uploadButton.disabled = false;
+                uploadSpinner.style.display = "none";
+            }
         });
+
+        // --- Parameter Population Logic --- //
+        function populateParameterList() {
+            parameterList.innerHTML = ""; // Clear previous list
+
+            // Create sections based on parameter sets
+            for (const setName in parameterSets) {
+                const setParams = parameterSets[setName];
+                const validParams = setParams.filter(p => availableColumns.includes(p));
+
+                if (validParams.length > 0) {
+                    const groupDiv = document.createElement("div");
+                    groupDiv.className = "param-group";
+                    const groupTitle = document.createElement("h3");
+                    groupTitle.textContent = setName;
+                    groupTitle.className = "text-lg font-semibold mb-2";
+                    groupDiv.appendChild(groupTitle);
+
+                    validParams.forEach(param => {
+                        const itemDiv = document.createElement("div");
+                        itemDiv.className = "param-item";
+
+                        const checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.id = `param-${param}`;
+                        checkbox.name = "parameters";
+                        checkbox.value = param;
+                        checkbox.checked = true; // Default to checked
+
+                        const label = document.createElement("label");
+                        label.htmlFor = `param-${param}`;
+                        label.textContent = param;
+
+                        const weightInput = document.createElement("input");
+                        weightInput.type = "number";
+                        weightInput.id = `weight-${param}`;
+                        weightInput.name = `weight-${param}`;
+                        weightInput.min = "0";
+                        weightInput.value = "10"; // Default weight
+                        weightInput.title = `Weight for ${param}`;
+
+                        itemDiv.appendChild(checkbox);
+                        itemDiv.appendChild(label);
+                        itemDiv.appendChild(weightInput);
+                        groupDiv.appendChild(itemDiv);
+                    });
+                    parameterList.appendChild(groupDiv);
+                }
+            }
+
+            // Add any remaining columns not in sets
+            const otherParams = availableColumns.filter(p => !Object.values(parameterSets).flat().includes(p) && p !== identifierColumnSpan.textContent);
+            if (otherParams.length > 0) {
+                 const groupDiv = document.createElement("div");
+                 groupDiv.className = "param-group";
+                 const groupTitle = document.createElement("h3");
+                 groupTitle.textContent = "Other Available Columns";
+                 groupTitle.className = "text-lg font-semibold mb-2";
+                 groupDiv.appendChild(groupTitle);
+
+                 otherParams.forEach(param => {
+                     const itemDiv = document.createElement("div");
+                     itemDiv.className = "param-item";
+                     // ... (create checkbox, label, weight input as above) ...
+                      const checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.id = `param-${param}`;
+                        checkbox.name = "parameters";
+                        checkbox.value = param;
+                        checkbox.checked = false; // Default to unchecked for others
+
+                        const label = document.createElement("label");
+                        label.htmlFor = `param-${param}`;
+                        label.textContent = param;
+
+                        const weightInput = document.createElement("input");
+                        weightInput.type = "number";
+                        weightInput.id = `weight-${param}`;
+                        weightInput.name = `weight-${param}`;
+                        weightInput.min = "0";
+                        weightInput.value = "0"; // Default weight 0
+                        weightInput.title = `Weight for ${param}`;
+
+                        itemDiv.appendChild(checkbox);
+                        itemDiv.appendChild(label);
+                        itemDiv.appendChild(weightInput);
+                        groupDiv.appendChild(itemDiv);
+                 });
+                 parameterList.appendChild(groupDiv);
+            }
+        }
+
+        // --- Analyze Logic --- //
+        analyzeForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            analyzeError.textContent = "";
+            analyzeButton.disabled = true;
+            analyzeSpinner.style.display = "block";
+
+            const selectedParameters = [];
+            const weights = {};
+            const checkboxes = parameterList.querySelectorAll("input[type=\"checkbox\"]:checked");
+
+            checkboxes.forEach(checkbox => {
+                const paramName = checkbox.value;
+                selectedParameters.push(paramName);
+                const weightInput = document.getElementById(`weight-${paramName}`);
+                weights[paramName] = weightInput ? parseInt(weightInput.value, 10) || 0 : 0;
+            });
+
+            console.log("Sending for analysis:", { parameters: selectedParameters, weights });
+
+            try {
+                const response = await fetch("/analyze", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ parameters: selectedParameters, weights }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || `HTTP error! status: ${response.status}`);
+                }
+
+                console.log("Analysis successful:", data);
+                resultsTable.innerHTML = data.results_html || "<p>No results returned.</p>";
+                parameterSection.style.display = "none";
+                resultsContainer.style.display = "block";
+
+            } catch (error) {
+                console.error("Analysis failed:", error);
+                analyzeError.textContent = `Analysis failed: ${error.message}`;
+            } finally {
+                analyzeButton.disabled = false;
+                analyzeSpinner.style.display = "none";
+            }
+        });
+
+        // --- Reset Logic --- //
+        function resetApp() {
+             uploadSection.style.display = "block";
+             parameterSection.style.display = "none";
+             resultsContainer.style.display = "none";
+             uploadError.textContent = "";
+             analyzeError.textContent = "";
+             fileInput.value = ""; // Clear file input
+             parameterList.innerHTML = ""; // Clear params
+             resultsTable.innerHTML = ""; // Clear results
+        }
+
+        resetButton.addEventListener("click", resetApp);
+        resultsResetButton.addEventListener("click", resetApp);
+
     </script>
 </body>
 </html>
