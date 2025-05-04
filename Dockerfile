@@ -27,5 +27,5 @@ ENV FLASK_ENV=production
 
 # Run main.py when the container launches using Gunicorn
 # Bind to 0.0.0.0 to allow external connections
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "src.main:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "src.main:app"]
 
